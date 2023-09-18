@@ -8,13 +8,13 @@ public class BackwardArrayIt implements Iterator<Integer> {
     private int point = 0;
 
     public BackwardArrayIt(int[] data) {
-        /* реализуйте конструктор */
+        this.data = data;
+        point = data.length - 1;
     }
 
     @Override
     public boolean hasNext() {
-        /* Реализуйте метод */
-        return false;
+        return point >= 0;
     }
 
     @Override
@@ -22,6 +22,6 @@ public class BackwardArrayIt implements Iterator<Integer> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        return data[ ... ];
+        return data[point--];
     }
 }
