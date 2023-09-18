@@ -1,15 +1,18 @@
 package ru.job4j.iterator;
 
-import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+
 import java.util.NoSuchElementException;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BackwardArrayItTest {
 
     @Test
     void whenMultiCallHasNextThenTrue() {
         BackwardArrayIt iterator = new BackwardArrayIt(
-                new int[] {1, 2, 3, 4}
+                new int[]{1, 2, 3, 4}
         );
         assertThat(iterator.hasNext()).isTrue();
         assertThat(iterator.hasNext()).isTrue();
@@ -21,7 +24,7 @@ class BackwardArrayItTest {
     @Test
     void whenMultiCallHasNextThenNext() {
         BackwardArrayIt iterator = new BackwardArrayIt(
-                new int[] {1, 2, 3}
+                new int[]{1, 2, 3}
         );
         assertThat(iterator.hasNext()).isTrue();
         assertThat(iterator.hasNext()).isTrue();
@@ -33,7 +36,7 @@ class BackwardArrayItTest {
     @Test
     void whenReadSequence() {
         BackwardArrayIt iterator = new BackwardArrayIt(
-                new int[] {1, 2, 3}
+                new int[]{1, 2, 3}
         );
         assertThat(iterator.next()).isEqualTo(3);
         assertThat(iterator.next()).isEqualTo(2);
@@ -44,7 +47,7 @@ class BackwardArrayItTest {
     @Test
     void whenNextFromEmpty() {
         BackwardArrayIt iterator = new BackwardArrayIt(
-                new int[] {}
+                new int[]{}
         );
         assertThatThrownBy(iterator::next)
                 .isInstanceOf(NoSuchElementException.class);
