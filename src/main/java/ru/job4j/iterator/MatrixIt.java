@@ -12,10 +12,6 @@ public class MatrixIt implements Iterator<Integer> {
         this.data = data;
     }
 
-    boolean isLastCol(int column) {
-        return column < data[row].length;
-    }
-
     @Override
     public boolean hasNext() {
         if (column == data[row].length) {
