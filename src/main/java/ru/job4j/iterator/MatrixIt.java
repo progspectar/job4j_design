@@ -12,8 +12,16 @@ public class MatrixIt implements Iterator<Integer> {
         this.data = data;
     }
 
+    boolean isLastCol(int column) {
+        return column < data[row].length;
+    }
+
     @Override
     public boolean hasNext() {
+        if (column == data[row].length) {
+            column = 0;
+            row++;
+        }
         while (row < data.length && data[row].length == 0) {
             row++;
         }
@@ -25,15 +33,6 @@ public class MatrixIt implements Iterator<Integer> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        int res = data[row][column];
-        moveToNext();
-        return res;
-    }
-
-    private void moveToNext() {
-        if (++column == data[row].length) {
-            column = 0;
-            row++;
-        }
+        return data[row][column++];
     }
 }
