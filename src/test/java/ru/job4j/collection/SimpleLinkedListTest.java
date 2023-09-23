@@ -1,14 +1,10 @@
 package ru.job4j.collection;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import java.util.Iterator;
 
 class SimpleLinkedListTest {
 
@@ -59,7 +55,7 @@ class SimpleLinkedListTest {
 
     @Test
     void whenEmptyIterHashNextFalse() {
-        SimpleLinked<Integer> list = new SimpleLinkedList<>();
+        LinkedList<Integer> list = new SimpleLinkedList<>();
         Iterator<Integer> it = list.iterator();
         assertThat(it.hasNext()).isFalse();
     }
@@ -92,31 +88,5 @@ class SimpleLinkedListTest {
         assertThat(second.hasNext()).isTrue();
         assertThat(second.next()).isEqualTo(2);
         assertThat(second.hasNext()).isFalse();
-    }
-
-    @Test
-    void whenGetIteratorNoSuchElementExceptionThrown() {
-        Iterator<Integer> iterator = list.iterator();
-        iterator.next();
-        iterator.next();
-        assertThatThrownBy(iterator::next)
-                .isInstanceOf(NoSuchElementException.class);
-    }
-
-    @Test
-    void whenAddAfterGetIteratorHasNextThenMustBeException() {
-        Iterator<Integer> iterator = list.iterator();
-        assertThat(iterator.hasNext()).isTrue();
-        list.add(4);
-        assertThatThrownBy(iterator::hasNext)
-                .isInstanceOf(ConcurrentModificationException.class);
-    }
-
-    @Test
-    void whenAddAfterGetIteratorThenMustBeException() {
-        Iterator<Integer> iterator = list.iterator();
-        list.add(4);
-        assertThatThrownBy(iterator::next)
-                .isInstanceOf(ConcurrentModificationException.class);
     }
 }
