@@ -44,11 +44,10 @@ public class ForwardLinked<T> implements Iterable<T> {
     }
 
     private T unlinkFirst(Node<T> f) {
-        /* assert f == first && f != null; */
         final T element = f.item;
         final Node<T> next = f.next;
         f.item = null;
-        f.next = null; /* help GC */
+        f.next = null;
         head = next;
         size--;
         modCount++;
