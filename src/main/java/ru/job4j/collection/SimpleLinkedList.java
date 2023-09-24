@@ -56,9 +56,6 @@ public class SimpleLinkedList<E> implements SimpleLinked<E> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                if (expectedModCount != modCount) {
-                    throw new ConcurrentModificationException();
-                }
                 E res = currentNode.item;
                 currentNode = currentNode.next;
                 return res;
