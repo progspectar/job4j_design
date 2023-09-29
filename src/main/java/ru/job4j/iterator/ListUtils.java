@@ -38,6 +38,6 @@ public class ListUtils {
     }
 
     public static <T> void removeAll(List<T> list, List<T> elements) {
-        ListUtils.removeIf(list, l -> (elements.contains(l)));
+        removeIf(list, l -> (elements.contains(l)));
     }
 }
