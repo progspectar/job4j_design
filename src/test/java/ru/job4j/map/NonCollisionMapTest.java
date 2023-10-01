@@ -127,7 +127,6 @@ class NonCollisionMapTest {
         assertThat(map).hasSize(4);
     }
 
-
     @Test
     void whenCheckPutZeroAndNull() {
         SimpleMap<Integer, String> map = new NonCollisionMap<>();
@@ -154,5 +153,71 @@ class NonCollisionMapTest {
         SimpleMap<Integer, String> map = new NonCollisionMap<>();
         assertThat(map.put(0, "0")).isTrue();
         assertThat(map.get(null)).isNull();
+    }
+
+    @Test
+    void whenCheckPutGet() {
+        map.put(5, "5");
+        assertThat(map.get(5)).isEqualTo("5");
+        map.put(5, "55");
+        assertThat(map.get(5)).isEqualTo("5");
+    }
+
+    @Test
+    void whenCheckPutNullGet() {
+        map.put(5, null);
+        assertThat(map.get(5)).isNull();
+    }
+
+    @Test
+    void whenCheckGetNull() {
+        map.put(null, "null");
+        assertThat(map.get(null)).isEqualTo("null");
+        map.put(null, null);
+        assertThat(map.get(null)).isEqualTo("null");
+
+    }
+
+    @Test
+    void whenCheckGetAndRemove1() {
+        assertThat(map.get(1)).isEqualTo("1");
+        assertThat(map.remove(1)).isTrue();
+        assertThat(map.get(1)).isNull();
+
+    }
+
+    @Test
+    void whenCheckGetAndRemove2() {
+        map.put(null, "null");
+        assertThat(map.get(null)).isEqualTo("null");
+        assertThat(map.remove(null)).isTrue();
+        assertThat(map.get(null)).isNull();
+        map.put(null, "null1");
+        assertThat(map.get(null)).isEqualTo("null1");
+    }
+
+    @Test
+    void whenCheckIteratorHasNextIsConcurrentModificationException() {
+        SimpleMap<Integer, String> map = new NonCollisionMap<>();
+        Iterator it = map.iterator();
+        assertThat(it.hasNext()).isFalse();
+        map.put(1, "1");
+        assertThatThrownBy(it::hasNext)
+                .isInstanceOf(ConcurrentModificationException.class);
+
+    }
+
+    @Test
+    void whenCheckIterator1() {
+        SimpleMap<Integer, String> map = new NonCollisionMap<>();
+        map.put(1, "1");
+        map.put(2, "2");
+        map.put(3, "3");
+        Iterator it = map.iterator();
+        assertThat(it.next()).isEqualTo(1);
+        assertThat(it.next()).isEqualTo(2);
+        assertThat(it.next()).isEqualTo(3);
+        assertThatThrownBy(it::next)
+                .isInstanceOf(NoSuchElementException.class);
     }
 }
