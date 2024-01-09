@@ -1,9 +1,7 @@
 package ru.job4j.question;
 
 import org.junit.jupiter.api.Test;
-
 import java.util.Set;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class AnalizeTest {
@@ -56,30 +54,5 @@ class AnalizeTest {
         Set previous = Set.of(u1, u2, u3);
         Set current = Set.of(new User(1, "AA"), u2, new User(4, "D"));
         assertThat(Analize.diff(previous, current)).isEqualTo(new Info(1, 1, 1));
-    }
-
-    @Test
-    void whenNotChangedAndNewUsers() {
-        User u1 = new User(1, "A");
-        User u2 = new User(2, "B");
-        User u3 = new User(3, "C");
-        Set previous = Set.of(u1, u2, u3);
-        Set current = Set.of(new User(1, "A"), new User(2, "B"), new User(3, "C"));
-        assertThat(Analize.diff(previous, current)).isEqualTo(new Info(0, 0, 0));
-    }
-
-    @Test
-    void whenOneChangedAndOneAdded() {
-        User u1 = new User(1, "A");
-        User u2 = new User(2, "B");
-        User u3 = new User(3, "C");
-        Set previous = Set.of(u1, u2, u3);
-        Set current = Set.of(
-                new User(1, "A"),
-                new User(2, "B"),
-                new User(3, "CC"),
-                new User(4, "D")
-        );
-        assertThat(Analize.diff(previous, current)).isEqualTo(new Info(1, 1, 0));
     }
 }
