@@ -16,10 +16,10 @@ class AnalysisTest {
     @Test
     void unavailable(@TempDir Path tempDir) throws IOException {
         String source = tempDir.resolve("server.log").toFile().getAbsolutePath();
-        String target  = tempDir.resolve("target.txt").toFile().getAbsolutePath();
+        String target = tempDir.resolve("target.txt").toFile().getAbsolutePath();
         createServerLog(source);
         Analysis analysis = new Analysis();
-        analysis.unavailable(source,target);
+        analysis.unavailable(source, target);
         List<String> list = getListFromFile(target);
         assertThat(list.size()).isEqualTo(1);
         assertThat(list.get(0)).isEqualTo("10:57:01;11:02:02;");
@@ -35,13 +35,13 @@ class AnalysisTest {
     }
 
     void createServerLog(String fileName) throws FileNotFoundException {
-           try (PrintWriter output = new PrintWriter(fileName)) {
-            output.println("200 10:56:01" + System.lineSeparator() +
-                    "500 10:57:01" +System.lineSeparator() +
-                    "400 10:58:01" +System.lineSeparator() +
-                    "500 10:59:01" +System.lineSeparator() +
-                    "400 11:01:02" +System.lineSeparator() +
-                    "300 11:02:02");
+        try (PrintWriter output = new PrintWriter(fileName)) {
+            output.println("200 10:56:01" + System.lineSeparator()
+                    + "500 10:57:01" + System.lineSeparator()
+                    + "400 10:58:01" + System.lineSeparator()
+                    + "500 10:59:01" + System.lineSeparator()
+                    + "400 11:01:02" + System.lineSeparator()
+                    + "300 11:02:02");
         }
     }
 }
