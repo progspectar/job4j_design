@@ -5,7 +5,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class DuplicatesFinder {
+
     public static void main(String[] args) throws IOException {
-        Files.walkFileTree(Path.of("./"), new DuplicatesVisitor());
+        DuplicatesVisitor duplicatesVisitor = new DuplicatesVisitor();
+        Files.walkFileTree(Path.of("c:\\test"), duplicatesVisitor);
+        duplicatesVisitor.printDuplicates();
     }
 }
