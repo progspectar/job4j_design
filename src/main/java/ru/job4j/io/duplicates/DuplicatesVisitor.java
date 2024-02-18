@@ -25,7 +25,10 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
         FileProperty fileProperty = new FileProperty(size, name);
         if (fMap.containsKey(fileProperty)) {
             duplicates.add(file);
-            duplicates.add(fMap.get(fileProperty));
+            var v = fMap.get(fileProperty);
+            if (!duplicates.contains(v)) {
+                duplicates.add(v);
+            }
         } else {
             fMap.put(fileProperty, file);
         }
