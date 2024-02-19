@@ -20,6 +20,25 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
         return FileVisitResult.CONTINUE;
     }
 
+    private void addDuplicates(Path file, long size, String name) {
+        FileProperty fileProperty = new FileProperty(size, name);
+        fMap.computeIfAbsent(fileProperty, k -> new ArrayList<>())
+                .add(file);
+    }
+
+    public void printDuplicates() {
+        fMap
+                .entrySet()
+                .stream()
+                .filter(e -> e.getValue().size() > 1)
+                .forEach(e ->
+                        System.out.println("filename: "
+                                + e.getKey().getName()
+                                + " ,size: "
+                                + e.getKey().getSize()
+                                + System.lineSeparator()
+                                + e.getValue()));
+    }
 
 }
 
