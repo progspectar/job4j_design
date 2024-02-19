@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
-    private final Map<FileProperty, Path> fMap = new HashMap<>();
-    private final List<Path> duplicates = new ArrayList<>();
+    private final Map<FileProperty, List<Path>> fMap = new HashMap<>();
 
     @Override
     public FileVisitResult visitFile(Path file,
@@ -23,18 +22,21 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
 
     private void addDuplicates(Path file, long size, String name) {
         FileProperty fileProperty = new FileProperty(size, name);
-        if (fMap.containsKey(fileProperty)) {
-            duplicates.add(file);
-            var v = fMap.get(fileProperty);
-            if (!duplicates.contains(v)) {
-                duplicates.add(v);
-            }
-        } else {
-            fMap.put(fileProperty, file);
-        }
+        fMap.computeIfAbsent(fileProperty, k -> new ArrayList<>())
+                .add(file);
     }
 
     public void printDuplicates() {
-        duplicates.forEach(System.out::println);
+        fMap
+                .entrySet()
+                .stream()
+                .filter(e -> e.getValue().size() > 1)
+                .forEach(e ->
+                        System.out.println("filename: " + e.getKey().getName() + " ,size: " +
+                                e.getKey().getSize() +
+                                System.lineSeparator() +
+                                e.getValue()));
+
     }
 }
+
