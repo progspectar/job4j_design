@@ -36,7 +36,8 @@ public class ArgsName {
             var v = parts[1];
             if (k.isBlank()) {
                 throwIllegalArgEx(String.format("Error: This argument '%s' does not contain a key", arg));
-            } else if (v.isBlank()) {
+            }
+            if (v.isBlank()) {
                 throwIllegalArgEx(String.format("Error: This argument '%s' does not contain a value", arg));
             }
         }
