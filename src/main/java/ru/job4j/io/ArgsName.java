@@ -15,10 +15,6 @@ public class ArgsName {
         return value;
     }
 
-    public Map<String, String> getValues() {
-        return values;
-    }
-
     private void parse(String[] args) {
         for (String arg : args) {
             checkArg(arg);
