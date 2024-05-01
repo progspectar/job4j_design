@@ -25,7 +25,6 @@ class CSVReaderTest {
         ArgsName argsName = ArgsName.of(new String[]{
                 "-path=" + file.getAbsolutePath(), "-delimiter=;",
                 "-out=" + target.getAbsolutePath(), "-filter=name,education"});
-       ;
         Files.writeString(file.toPath(), data);
         String expected = String.join(
                 System.lineSeparator(),
