@@ -1,7 +1,6 @@
 package ru.job4j.io;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -12,7 +11,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class CSVReaderTest {
 
     @Test
-    void whenFilterTwoColumns(@TempDir Path folder) throws Exception {
+    void whenFilterTwoColumns() throws Exception {
+        Path folder = new File("c:\\tmp").toPath();
         String data = String.join(
                 System.lineSeparator(),
                 "name;age;last_name;education",
@@ -25,6 +25,7 @@ class CSVReaderTest {
         ArgsName argsName = ArgsName.of(new String[]{
                 "-path=" + file.getAbsolutePath(), "-delimiter=;",
                 "-out=" + target.getAbsolutePath(), "-filter=name,education"});
+       ;
         Files.writeString(file.toPath(), data);
         String expected = String.join(
                 System.lineSeparator(),
@@ -38,7 +39,8 @@ class CSVReaderTest {
     }
 
     @Test
-    void whenFilterThreeColumns(@TempDir Path folder) throws Exception {
+    void whenFilterThreeColumns() throws Exception {
+        Path folder = new File("c:\\tmp").toPath();
         String data = String.join(
                 System.lineSeparator(),
                 "name,age,last_name,education",
