@@ -1,9 +1,6 @@
 package ru.job4j.io;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.*;
 
 public class CSVReader {
@@ -13,33 +10,34 @@ public class CSVReader {
         String delimiter = argsName.get("delimiter");
         String out = argsName.get("out");
         String filter = argsName.get("filter");
-        if (!out.equals("stdout")) {
-            File outputFile = new File(out);
-            PrintStream printStream = new PrintStream(new FileOutputStream(outputFile));
-            System.setOut(printStream);
-        }
-        Scanner scanner = new Scanner(new FileInputStream(path));
         List<String> filterColumns = Arrays.stream(filter.split(",")).toList();
-        boolean isFirst = true;
         List<Integer> headerIdx = new ArrayList<>();
-        while (scanner.hasNextLine()) {
-            List<String> data = Arrays.stream(scanner.nextLine().split(delimiter)).toList();
-            StringJoiner sj = new StringJoiner(delimiter);
-            if (isFirst) {
-                headerIdx = getHeaderList(data, filterColumns);
-                for (int index : headerIdx) {
-                    sj.add(data.get(index));
-                }
-                System.out.println(sj);
-                isFirst = false;
-            } else {
-                for (int index : headerIdx) {
-                    sj.add(data.get(index));
-                }
-                System.out.println(sj);
+        try (var scanner = new Scanner(new FileInputStream(path))) {
+            if (!"stdout".equals(out)) {
+                File outputFile = new File(out);
+                PrintStream printStream = new PrintStream(new FileOutputStream(outputFile));
+                System.setOut(printStream);
             }
+            boolean isFirst = true;
+            while (scanner.hasNextLine()) {
+                List<String> data = Arrays.stream(scanner.nextLine().split(delimiter)).toList();
+                if (isFirst) {
+                    headerIdx = getHeaderList(data, filterColumns);
+                    isFirst = false;
+                }
+                printResultLine(headerIdx, delimiter, data);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        scanner.close();
+    }
+
+    private static void printResultLine(List<Integer> headerIdx, String delimiter, List<String> data) {
+        StringJoiner sj = new StringJoiner(delimiter);
+        for (int index : headerIdx) {
+            sj.add(data.get(index));
+        }
+        System.out.println(sj);
     }
 
     private static List<Integer> getHeaderList(List<String> data, List<String> filterColumns) {
