@@ -18,6 +18,10 @@ public class EchoServer {
                     output.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                     for (String string = input.readLine(); string != null && !string.isEmpty(); string = input.readLine()) {
                         System.out.println(string);
+                        if (string.contains("/?msg=Bye")) {
+                            output.write("Bye".getBytes());
+                            server.close();
+                        }
                     }
                     output.flush();
                 }
