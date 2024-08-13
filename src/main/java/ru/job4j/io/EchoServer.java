@@ -22,6 +22,7 @@ public class EchoServer {
                     }
                     if (string.contains("/?msg=Exit")) {
                         server.close();
+                        break;
                     } else if (string.contains("/?msg=Hello")) {
                         output.write("Hello\r\n\r\n".getBytes());
                     } else {
