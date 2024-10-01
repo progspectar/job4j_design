@@ -23,10 +23,7 @@ public class Contact implements Serializable {
 
     @Override
     public String toString() {
-        return "Contact{" +
-                "zipCode=" + zipCode +
-                ", phone='" + phone + '\'' +
-                '}';
+        return "Contact{" + "zipCode=" + zipCode + ", phone='" + phone + '\'' + '}';
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -34,16 +31,12 @@ public class Contact implements Serializable {
 
         /* Запись объекта во временный файл, который удалится системой */
         File tempFile = Files.createTempFile(null, null).toFile();
-        try (FileOutputStream fos = new FileOutputStream(tempFile);
-             ObjectOutputStream oos =
-                     new ObjectOutputStream(fos)) {
+        try (FileOutputStream fos = new FileOutputStream(tempFile); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(contact);
         }
 
         /* Чтение объекта из файла */
-        try (FileInputStream fis = new FileInputStream(tempFile);
-             ObjectInputStream ois =
-                     new ObjectInputStream(fis)) {
+        try (FileInputStream fis = new FileInputStream(tempFile); ObjectInputStream ois = new ObjectInputStream(fis)) {
             final Contact contactFromFile = (Contact) ois.readObject();
             System.out.println(contactFromFile);
         }
