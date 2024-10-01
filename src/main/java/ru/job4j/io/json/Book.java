@@ -22,12 +22,13 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
-                "name='" + name + '\'' +
-                ", isAvailable=" + isAvailable +
-                ", id=" + id +
-                ", author=" + author +
-                ", genres=" + Arrays.toString(genres) +
+        return "Book{"
+                + "name='" + name + '\''
+                + ", isAvailable=" + isAvailable
+                + ", id=" + id
+                + ", author=" + author
+                + ", genres=" + Arrays.toString(genres)
+                +
                 '}';
     }
 

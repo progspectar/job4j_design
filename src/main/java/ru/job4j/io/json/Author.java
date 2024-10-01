@@ -9,8 +9,6 @@ public class Author {
 
     @Override
     public String toString() {
-        return "Author{" +
-                "name='" + name + '\'' +
-                '}';
+        return "Author{" + "name='" + name + '\'' + '}';
     }
 }
