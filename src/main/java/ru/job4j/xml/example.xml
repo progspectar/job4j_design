@@ -1,0 +1,14 @@
+<Person>
+    <isActive>true</isActive>
+    <age>30</age>
+    <name>John Doe</name>
+    <address>
+        <street>Main St</street>
+        <city>Springfield</city>
+    </address>
+    <hobbies>
+        <hobby>Reading</hobby>
+        <hobby>Traveling</hobby>
+        <hobby>Swimming</hobby>
+    </hobbies>
+</Person>
